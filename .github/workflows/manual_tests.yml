@@ -36,5 +36,5 @@ jobs:
 
     - name: Run Full Test Suite
       run: |
-        python -m tests.test_google_finance
+        python -m tests.test_google_finance --test-suite ${{ github.event.inputs.test_suite }}
       
