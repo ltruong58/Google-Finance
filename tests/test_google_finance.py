@@ -5,7 +5,7 @@ from utils.config import EXPECTED_SYMBOLS
 import time
 
 # Test data
-EXPECTED_SYMBOLS = ["NFLX", "MSFT", "TSLA"]
+# EXPECTED_SYMBOLS = ["NFLX", "MSFT", "TSLA"]
 
 class TestGoogleFinance:
     """Test Suite for Google Finance"""
@@ -31,11 +31,17 @@ class TestGoogleFinance:
         # Step 3: Retrieve stock symbols
         retrieved_symbols = self.page.get_interesting_stock_symbols()
         print("Retrieved Symbols:", retrieved_symbols)
-        print("Cur - given", list(set(retrieved_symbols) - set(EXPECTED_SYMBOLS)))
-        print("Given - Cur", list(set(EXPECTED_SYMBOLS) - set(retrieved_symbols)))
-        # Compare retrieved symbols with the expected data
+
+        # Step 4: Compare retrieved symbols with the expected data
         # for symbol in EXPECTED_SYMBOLS:
         #     assert symbol in retrieved_symbols, f"Symbol {symbol} not found in retrieved symbols!"
+
+        # Step 5:
+        print("Cur - given", list(set(retrieved_symbols) - set(EXPECTED_SYMBOLS)))
+        
+        # Step 6:
+        print("Given - Cur", list(set(EXPECTED_SYMBOLS) - set(retrieved_symbols)))
+
 
 # Run the test
 if __name__ == "__main__":
