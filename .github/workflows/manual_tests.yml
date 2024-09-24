@@ -1,0 +1,39 @@
+# .github/workflows/manual_tests.yml
+# Manual workflow should have option to run full set of test or test case 5 and 6 from Problem #1.
+
+name: Manual Test Runner
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Select which tests to run'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - full       # Run all tests
+          - test_5_6   # Run only test case 5 and 6 from Problem#1
+jobs:
+  run-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run Full Test Suite
+      run: |
+        python tests/test_google_finance.py --test-suite ${{ github.event.inputs.test_suite }}
+      
