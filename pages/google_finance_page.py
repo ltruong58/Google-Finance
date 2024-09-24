@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from utils.config import GOOGLE_FINANCE_URL, EXPECTED_TITLE
 
+
 class GoogleFinancePage:
     # Define locators 
     STOCK_SYMBOLS = (By.XPATH, "//div[contains(text(), 'You may be interested in')]/following-sibling::ul/descendant::div[contains(@class,'COaKTb')]")
@@ -23,7 +24,7 @@ class GoogleFinancePage:
 
     def verify_page_title(self):
         """Verifies that the page title is correct."""
-        print(self.driver.title)
+        print('Page Title: ', self.driver.title)
         assert EXPECTED_TITLE in self.driver.title, "Page title does not match!"
 
     def get_interesting_stock_symbols(self):
