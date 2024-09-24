@@ -1,6 +1,8 @@
 from selenium import webdriver
 # from selenium.webdriver.support.page_factory  import PageFactory
 from pages.google_finance_page import GoogleFinancePage
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 from utils.config import EXPECTED_SYMBOLS
 import time
 
@@ -12,7 +14,7 @@ class TestGoogleFinance:
 
     def setup_method(self):
         """Setup method to initialize the Chrome driver."""
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         self.driver.maximize_window()
         self.page = GoogleFinancePage(self.driver)
 
@@ -49,7 +51,6 @@ if __name__ == "__main__":
     test_suite.setup_method()
     try:
         test_suite.test_verify_stock_symbols()
-        # test_suite.test_temp()
      
     finally:
         test_suite.teardown_method()
