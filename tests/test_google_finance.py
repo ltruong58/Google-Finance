@@ -3,6 +3,8 @@ from selenium import webdriver
 from pages.google_finance_page import GoogleFinancePage
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+
 from utils.config import GIVEN_SYMBOLS
 import argparse
 
@@ -11,7 +13,15 @@ class TestGoogleFinance:
 
     def setup_method(self):
         """Setup method to initialize the Chrome driver."""
-        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        options = Options()
+        options.add_argument('--headless')  # Run in headless mode
+        options.add_argument('--no-sandbox')  # Bypass OS security model
+        options.add_argument('--disable-dev-shm-usage')  # Overcome limited resource problems
+        options.add_argument('--disable-gpu')  # Applicable only if running on Windows
+        options.add_argument('--remote-debugging-port=9222')  # Port for remote debugging
+        options.add_argument('--disable-software-rasterizer')  # Disables software rendering
+
+        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
         self.driver.maximize_window()
         self.page = GoogleFinancePage(self.driver)
 
