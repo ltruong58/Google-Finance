@@ -17,18 +17,10 @@ on:
 jobs:
   run-tests:
 
-    # strategy:
-    #   matrix:
-    #     os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-      deployments: write
-      actions: write
-      checks: write
-    # runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     
     steps:
     - name: Checkout code
