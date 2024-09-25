@@ -36,42 +36,42 @@ jobs:
       
     # Step specific to Ubuntu
     - name: Install Google Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget unzip
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget unzip
+        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
 
-      - name: Check Chrome Version
-        run: |
-          google-chrome --version
+    - name: Check Chrome Version
+      run: |
+        google-chrome --version
 
-      - name: Set up ChromeDriver
-        run: |
-          set -e # Exit immediately if a command exits with a non-zero status
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-          echo "Chrome version detected: $CHROME_VERSION"
+    - name: Set up ChromeDriver
+      run: |
+        set -e # Exit immediately if a command exits with a non-zero status
+        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+        echo "Chrome version detected: $CHROME_VERSION"
 
-          # Download the corresponding version of ChromeDriver
-          wget -q "https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip"
-          
-          # Check if the download was successful
-          if [[ $? -ne 0 ]]; then
-            echo "Failed to download ChromeDriver for version $CHROME_VERSION"
-            exit 1
-          fi
+        # Download the corresponding version of ChromeDriver
+        wget -q "https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip"
+        
+        # Check if the download was successful
+        if [[ $? -ne 0 ]]; then
+          echo "Failed to download ChromeDriver for version $CHROME_VERSION"
+          exit 1
+        fi
 
-          unzip chromedriver_linux64.zip
-          
-          # Move and set permissions for ChromeDriver
-          sudo mv chromedriver /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
+        unzip chromedriver_linux64.zip
+        
+        # Move and set permissions for ChromeDriver
+        sudo mv chromedriver /usr/local/bin/
+        sudo chmod +x /usr/local/bin/chromedriver
 
-      - name: Check ChromeDriver Installation
-        run: |
-          chromedriver --version
+    - name: Check ChromeDriver Installation
+      run: |
+        chromedriver --version
 
     - name: Set up Python 
       uses: actions/setup-python@v3
